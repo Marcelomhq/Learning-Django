@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Task List</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    <a href="{% url 'tasks:task_create' %}">Add Task</a>
+    {% if tasks %}
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task }}
+                {{ task.title }} - {% if task.completed %}✅ Completed{% else %}❌ Pending{% endif %}
+                <a href="{% url 'tasks:task_update' task.id %}">Edit</a> |
+                <a href="{% url 'tasks:task_delete' task.id %}">Delete</a> 
+                <!-- onclick="return confirm('Are you sure?');">Delete</a> -->
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+      <p>Nothing</p>
+    {% endif %}
+</body>
+</html>

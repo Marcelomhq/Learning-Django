@@ -1,0 +1,19 @@
+# .gitignore
+.env
+*.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.pot
+*.py[co]
+*.swp
+*.swo
+*.DS_Store
+.vscode/
+venv/
+env/
+.idea/

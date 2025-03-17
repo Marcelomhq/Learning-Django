@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+</head>
+<body>
+  <h2>Register</h2>
+
+    <!-- Display messages (success/error) -->
+    
+  <form method="post">
+    {% csrf_token %}
+
+        <!-- Username (Email) Field -->
+        <div>
+          <label>Username must be a valid email</label>
+          {{ form.username }}
+          {% if form.username.errors %}
+            <div style="color: red;">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+    
+        <!-- Password Field -->
+        <div>
+          <label>Password must have 6 to 8 digits</label>
+          {{ form.password }}
+          {% if form.password.errors %}
+            <div style="color: red;">{{ form.password.errors }}</div>
+          {% endif %}
+        </div>
+    
+        <!-- Registration Key Field -->
+        <div>
+          <label>Register key</label>
+          {{ form.reg_key }}
+          {% if form.reg_key.errors %}
+            <div style="color: red;">{{ form.reg_key.errors }}</div>
+          {% endif %}
+        </div>
+    <button type="submit">Submit Registration</button>
+
+  </form>
+</body>
+</html>

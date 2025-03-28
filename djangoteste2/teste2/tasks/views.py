@@ -3,42 +3,65 @@ from .models import Task, User, RegKey
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView,LogoutView
 from django.views.generic.edit import FormView
 from .forms import RegisterForm,TheLoginForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.messages import get_messages
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 
 
 
 # Create your views here.
 
+class BaseLoginRequiredView(LoginRequiredMixin):
+    login_url = reverse_lazy("tasks:login")
+    redirect_field_name = None
 
-class TaskListView(LoginRequiredMixin,generic.ListView):
+class TaskListView(BaseLoginRequiredView,generic.ListView):
     model = Task
     template_name = 'tasks/task_list.html'
     context_object_name = 'tasks'
 
-    login_url = "/login/"
+    # login_url = "/login/"
+    # redirect_field_name = None
+
 
     def get_queryset(self):
         return Task.objects.all()
     
 
-class CreateView(LoginRequiredMixin,generic.CreateView):
+class CreateView(BaseLoginRequiredView,generic.CreateView):
     model = Task
     template_name = 'tasks/task_form.html'
     fields = ['title', 'description']
     success_url = reverse_lazy('tasks:task_list')
-    login_url = "/login/"
+    # login_url = "/login/"
+    # redirect_field_name = None
 
-class TaskUpdateView(generic.UpdateView):
+class TaskUpdateView(BaseLoginRequiredView,generic.UpdateView):
     model = Task
     template_name = 'tasks/task_form.html'
     fields = ['title', 'description', 'completed']
     success_url = reverse_lazy('tasks:task_list')
+    # login_url = "/login/"
+    # redirect_field_name = None
+
+class TaskDeleteView(BaseLoginRequiredView,generic.DeleteView):
+    model = Task
+    template_name = 'tasks/task_confirm_delete.html'
+    success_url = reverse_lazy('tasks:task_list')
+
+    # login_url = "/login/"
+    # redirect_field_name = None
+
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        logout(request)
+        messages.success(request, "You've been logged out successfully!")
+        return redirect(reverse_lazy("tasks:login"))
 
 class TheLoginView(FormView):
     template_name = 'tasks/login_screen.html'
@@ -80,14 +103,22 @@ class RegisterView(FormView):
     success_url = reverse_lazy("tasks:login")
 
     def form_valid(self,form):
-        username = form.clean_username()
-        password = form.clean_password()
-        reg_key = form.clean_reg_key()
+        username = form.cleaned_data.get("username").lower()
+        password = form.cleaned_data.get("password")
+        reg_key = form.cleaned_data.get("reg_key_obj")
         
         reg_key_obj = RegKey.objects.get(reg_key=reg_key)    
         # User.objects.create(username=username, password = password, reg_key= reg_key_obj)
-        User.objects.create(username=username, password=make_password(password), reg_key=reg_key_obj)
-        RegKey.objects.filter(reg_key=reg_key).update(used=True)
+        User.objects.create_user(
+            username=username,
+            email=username,
+            password=password,
+            reg_key = reg_key_obj)       
+
+        reg_key_obj.used = True
+        reg_key_obj.save()
+        # User.objects.create(username=username, password=make_password(password), reg_key=reg_key_obj)
+        # RegKey.objects.filter(reg_key=reg_key).update(used=True)
         # form.username.errors,form.password.errors,form.reg_key.errors = None
         
         storage = get_messages(self.request)
@@ -104,16 +135,26 @@ class RegisterView(FormView):
         
             
 
+# @method_decorator(login_required, name='dispatch')
+# def TaskDirectDeleteView(request, task_id):
+#     task = get_object_or_404(Task, id = task_id)
+#     task.delete()
+#     return redirect('tasks:task_list')
 
-def TaskDirectDeleteView(request, task_id):
-    task = get_object_or_404(Task, id = task_id)
-    task.delete()
-    return redirect('tasks:task_list')
 
-class TaskDeleteView(generic.DeleteView):
-    model = Task
-    template_name = 'tasks/task_confirm_delete.html'
-    success_url = reverse_lazy('tasks:task_list')
+
+
+#Will leave this here in case i want to avoid redundancy
+# def require_login(get_response):
+
+#     def middleware(request):
+#         allowed_paths = [settings.LOGIN_URL,"/register/"]
+
+#         if not request.user.is_authenticated and request.path not in allowed_paths:
+#             return redirect(settings.LOGIN_URL)
+#         return get_response(request)
+    
+#     return middleware
 
 # def task_list(request):
 #     tasks = Task.objects.all()

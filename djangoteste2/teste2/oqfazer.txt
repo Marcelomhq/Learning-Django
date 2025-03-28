@@ -1,0 +1,5 @@
+xamp pra hostear o banco e a pagina html
+
+docker pra dar deploy
+
+

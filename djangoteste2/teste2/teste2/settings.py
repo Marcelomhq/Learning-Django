@@ -55,6 +55,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+LOGIN_URL = "/login/"
+
 ROOT_URLCONF = "teste2.urls"
 
 TEMPLATES = [

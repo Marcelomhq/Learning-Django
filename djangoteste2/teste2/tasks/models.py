@@ -17,9 +17,9 @@ class User(AbstractUser):
     def reg_key_string(self):
         return self.reg_key.reg_key
     
-    @property
-    def password_string(self):
-        return self.reg_key.reg_key
+    # @property
+    # def password_string(self):
+    #     return self.reg_key.reg_key
 
     def __str__(self):
         return self.username

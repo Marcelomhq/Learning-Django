@@ -11,13 +11,13 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 110vh;
+    min-height: 100vh;
     background: rgba(39, 39, 39, 0.4);
 }
 .nav{
@@ -26,14 +26,14 @@ body{
     display: flex;
     justify-content: space-around;
     width: 100%;
-    height: 100px;
-    line-height: 100px;
+    height: 6.25rem;
+    line-height: 6.25rem;
     background: linear-gradient(rgba(39,39,39, 0.6), transparent);
     z-index: 100;
 }
 .nav-logo p{
     color: white;
-    font-size: 25px;
+    font-size: 1.56rem;
     font-weight: 600;
 }
 .nav-menu ul{
@@ -46,19 +46,19 @@ body{
     text-decoration: none;
     font-weight: 500;
     color: #fff;
-    padding-bottom: 15px;
-    margin: 0 25px;
+    padding-bottom: 0.9375rem;
+    margin: 0 1.5625rem;
 }
 .link:hover, .active{
-    border-bottom: 2px solid #fff;
+    border-bottom: 0.125rem solid #fff;
 }
 .nav-button .btn{
-    width: 130px;
-    height: 40px;
+    width: 8.125rem;
+    height: 2.5rem;
     font-weight: 500;
     background: rgba(255, 255, 255, 0.4);
     border: none;
-    border-radius: 30px;
+    border-radius: 1.875rem;
     cursor: pointer;
     transition: .3s ease;
 }
@@ -66,7 +66,7 @@ body{
     background: rgba(255, 255, 255, 0.3);
 }
 #registerBtn{
-    margin-left: 15px;
+    margin-left: 0.9375;
 }
 .btn.white-btn{
     background: rgba(255, 255, 255, 0.7);
@@ -82,31 +82,34 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 512px;
-    height: 420px;
-    overflow: hidden;
+    max-width: 512px;
+    /* width: 90%; */
+    width: 32rem;
+    height: 26.25rem;
+    /* overflow: hidden; */
     z-index: 2;
 }
+
 .login-container{
     position: absolute;
-    left: 4px;
-    width: 500px;
+    left: 0.25rem;
+    width: 31.25rem;
     display: flex;
     flex-direction: column;
     transition: .5s ease-in-out;
 }
 .register-container{
     position: absolute;
-    right: -520px;
-    width: 500px;
+    right: -32.5rem;
+    width: 31.25rem;
     display: flex;
     flex-direction: column;
     transition: .5s ease-in-out;
 }
 .remember-container {
     position: absolute;
-    left: -510px;
-    width: 500px;
+    left: -31.675rem;
+    width: 31.25rem;
     display: flex;
     flex-direction: column;
     transition: .5s ease-in-out;
@@ -116,34 +119,34 @@ body{
 .top span{
     color: #fff;
     font-size: small;
-    padding: 10px 0;
+    padding: 0.625rem 0;
     display: flex;
     justify-content: center;
 }
 .top span a{
     font-weight: 500;
     color: #fff;
-    margin-left: 5px;
+    margin-left: 0.3125rem;
 }
 header{
     color: #fff;
-    font-size: 30px;
+    font-size: 1.875rem;
     text-align: center;
-    padding: 10px 0 30px 0;
+    padding: 0.625rem 0 1.875rem 0;
 }
 .two-forms{
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;
 }
 .input-field{
-    font-size: 15px;
+    font-size: 0.9375rem;
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
-    height: 50px;
+    height: 3.125rem;
     width: 100%;
-    padding: 0 10px 0 45px;
+    padding: 0 0.625rem 0 2.8125rem;
     border: none;
-    border-radius: 30px;
+    border-radius: 1.875rem;
     outline: none;
     transition: .2s ease;
 }
@@ -155,18 +158,18 @@ header{
 }
 .input-box i{
     position: relative;
-    top: -35px;
-    left: 17px;
+    top: -2.1875rem;
+    left: 1.0625rem;
     color: #fff;
 }
 .submit{
-    font-size: 15px;
+    font-size: 0.9375rem;
     font-weight: 500;
     color: black;
-    height: 45px;
+    height: 2.8125rem;
     width: 100%;
     border: none;
-    border-radius: 30px;
+    border-radius: 1.875rem;
     outline: none;
     background: rgba(255, 255, 255, 0.7);
     cursor: pointer;
@@ -174,19 +177,22 @@ header{
 }
 .submit:hover{
     background: rgba(255, 255, 255, 0.5);
-    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0.0625rem 0.3125rem 0.4375rem 0.0625rem rgba(0, 0, 0, 0.2);
 }
+
 .two-col{
     display: flex;
     justify-content: space-between;
     color: #fff;
     font-size: small;
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
+
 .two-col .one{
     display: flex;
-    gap: 5px;
+    gap: 0.3125rem;
 }
+
 .two label a{
     text-decoration: none;
     color: #fff;
@@ -199,17 +205,17 @@ header{
         display: none;
     }
     .nav-menu.responsive{
-        top: 100px;
+        top: 6.25rem;
     }
     .nav-menu{
         position: absolute;
-        top: -800px;
+        top: -50rem;
         display: flex;
         justify-content: center;
         background: rgba(255, 255, 255, 0.2);
         width: 100%;
         height: 90vh;
-        backdrop-filter: blur(20px);
+        backdrop-filter: blur(1.25rem);
         transition: .3s;
     }
     .nav-menu ul{
@@ -220,9 +226,9 @@ header{
         display: block;
     }
     .nav-menu-btn i{
-        font-size: 25px;
+        font-size: 1.5625rem;
         color: #fff;
-        padding: 10px;
+        padding: 0.625rem;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 50%;
         cursor: pointer;

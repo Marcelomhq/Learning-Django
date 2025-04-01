@@ -6,6 +6,16 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 
 class RegisterForm(forms.Form):
+    first_name = forms.CharField(
+        label="First Name",
+        widget=forms.TextInput(attrs={"placeholder": "Enter your first name"})
+    )
+
+    last_name = forms.CharField(
+        label="Last Name",
+        widget=forms.TextInput(attrs={"placeholder": "Enter your first name"})
+    )
+
     username = forms.EmailField(
         label="Username (Email)", 
         validators=[EmailValidator()], 
@@ -23,6 +33,18 @@ class RegisterForm(forms.Form):
         label="Register Key",
         widget=forms.PasswordInput(attrs={"placeholder": "Enter Register Key"})
     )
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get("first_name").capitalize()
+        if not first_name.isalpha():
+            raise ValidationError("First name must contain only letters, no numbers, symbols or spaces")
+        return first_name
+    
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get("last_name").capitalize()
+        if not last_name.isalpha():
+            raise ValidationError("Last name must contain only letters, no numbers, symbols or spaces")
+        return last_name
 
     def clean_username(self):
         username = self.cleaned_data.get("username").lower()        
@@ -59,20 +81,25 @@ class TheLoginForm(forms.Form):
         max_length=8
     )
 
+    
+    
+
     def clean(self):
         cleaned_data = super().clean()
-        username = cleaned_data.get("username").lower()
+        print(cleaned_data)
+        username = cleaned_data.get("username")
         password = cleaned_data.get("password")
-
-        user = authenticate(username=username,password=password)
-        print(user)
-        print(username)
-        print(password)
+        if not username:
+            raise ValidationError("Username must be a valid email")
+        
+        user = authenticate(username=username.lower(),password=password)
+       
         if not user:
             self.add_error("username","Username can't be found or Password is incorrect.")
         else:
             cleaned_data["user"] = user
         return cleaned_data
+    
         
         # if not User.objects.filter(username=username).exists():
         #     self.add_error("username","Username can't be found.")

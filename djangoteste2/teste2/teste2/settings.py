@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "tasks",
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [     
+    "tasks.middleware.aaaamiddleware.RedirectOldLoginMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -53,9 +54,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "tasks.middleware.aaaamiddleware.RequireLoginMiddleware" 
 ]
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "/authenticate/"  
+
 
 ROOT_URLCONF = "teste2.urls"
 

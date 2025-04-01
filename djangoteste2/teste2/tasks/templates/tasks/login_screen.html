@@ -19,14 +19,14 @@
         <div class="nav-menu" id="navMenu">
             <ul>
                 <li><a href="#" class="link active">Página Inicial</a></li>
-                <li><a href="#" class="link">Calendário</a></li>
-                <li><a href="#" class="link">Tarefas</a></li>
-                <li><a href="#" class="link">Registros</a></li>
+                <li style="display:none"><a href="#" class="link">Calendário</a></li>
+                <li style="display:none"><a href="#" class="link">Tarefas</a></li>
+                <li style="display:none"><a href="#" class="link">Registros</a></li>
             </ul>
         </div>
         <div class="nav-button">
-            <button class="btn white-btn" id="loginBtn" onclick="login()">Entrar</button>
-            <button class="btn" id="registerBtn" onclick="register()">Registrar</button>
+            <button class="btn white-btn" id="loginBtn" onclick="showLoginForm()">Entrar</button>
+            <button class="btn" id="registerBtn" onclick="showRegisterForm()">Registrar</button>
         </div>
         <div class="nav-menu-btn">
             <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -34,69 +34,151 @@
     </nav>
 
     <div class="form-box">
-        <form method="post"> 
-            {% csrf_token %} 
-            <div class="login-container" id="login">
-               
+        
+        <div class="login-container" id="login">
+
+            <form method="post" action="{% url 'tasks:authenticate' %}" id="login-form"> 
+                {% csrf_token %} 
                 <div class="top">
-                    <span>Não tem uma conta? <a href="#" onclick="register()">Cadastrar-se</a></span>
+                    <span>Não tem uma conta? <a href="#" onclick="showRegisterForm()">Cadastrar-se</a></span>
                     <header>Login</header>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Usuario ou Email" name="{{ form.username.name }}"
-                    id="{{ form.username.id_for_label }}">
-                    <!-- <input type="text" class="input-field" placeholder="Usuário ou Email"> -->
-                    
+                    <input type="text" class="input-field" placeholder="Email" name="{{ login_form.username.name }}" data-field-name="username" required>
                     <i class="bx bx-user"></i>
+                    <div class="error-message" data-error-for="username"></div> {# Placeholder for errors #}
+                    <!-- {% if login_form.username.errors %}
+                        <div style="color: red;">
+                            {{ login_form.username.errors.0 }}
+                        </div>
+                    {% endif %} -->
+                    <!-- <input type="text" class="input-field" placeholder="Usuário ou Email"> -->
+                    <!-- {% for error in login_form.username.errors %}
+                        <div class="error-message" style="color: red; font-size: 0.8em;">{{ error }}</div>
+                    {% endfor %}
+                    {% comment %} Display non-field errors specific to login form only once {% endcomment %}
+                    {% if login_form.non_field_errors and 'login_submit' in request.POST %}
+                        {% for error in login_form.non_field_errors %}
+                            <div class="error-message" style="color: red; font-size: 0.8em;">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %} -->
+                    
+                    
                     <!-- error handling here later -->
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" class="input-field" name="{{ form.password.name }}"
-                    id="{{ form.password.id_for_label }}">
-                    <!-- <input type="password" class="input-field" placeholder="Senha"> -->
-                     <!-- {{ form.password }} -->
+                    <input type="password" placeholder="Password" class="input-field" name="{{ login_form.password.name }}" data-field-name="password" required>
                     <i class="bx bx-lock-alt"></i>
+                    <div class="error-message" data-error-for="password"></div> {# Placeholder for errors #}
+
+                    <!-- {% if login_form.password.errors %}
+                        <div style="color: red;">
+                            {{ login_form.password.errors.0 }}
+                        </div>
+                    {% endif %} -->
+
+                    <!-- {% for error in login_form.password.errors %}
+                        <div class="error-message" style="color: red; font-size: 0.8em;">{{ error }}</div>
+                    {% endfor %} -->
+                    <!-- <input type="password" class="input-field" placeholder="Senha"> -->
+                    <!-- {{ form.password }} -->
+                    <!-- AGAIN< WTF IS THIS -->
+                    
                 </div>
+                <!-- WHy is this here???  -->
+                <div class="error-message non-field" data-error-for="__all__"></div>
                 <div class="input-box">
-                    <input type="submit" class="submit" value="Entrar">
+                    <input type="submit" class="submit" name="login_submit" value="Entrar">
                 </div>
+                <!-- CHECK THIS FUNCTION, NOT SURE IF ITS WORKING -->
                 <div class="two-col">
                     <div class="one">
                         <input type="checkbox" id="login-check">
                         <label for="login-check">Lembrar-me</label>
                     </div>
                     <div class="two">
-                        <label><a href="#" onclick="remember()">Esqueceu a senha? </a></label>
+                        <label><a href="#" onclick="showRememberForm()">Esqueceu a senha? DISABLED</a></label>
                     </div>
                 </div>
-            </div>
+            </form>
+        </div>
+    
         
+        <div class="register-container" id="register">
             
-            <div class="register-container" id="register">
                 <div class="top">
-                    <span>Já tem uma conta? <a href="#" onclick="login()">Login</a></span>
+                    <span>Já tem uma conta? <a href="#" onclick="showLoginForm()">Login</a></span>
                     <header>Cadastrar-se</header>
                 </div>
+            <form method="post" action="{% url 'tasks:authenticate' %}" id="register-form"> 
+                {% csrf_token %}
+
                 <div class="two-forms">
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Nome">
-                        <i class="bx bx-user"></i>
+                        <input type="text" class="input-field" placeholder="Primeiro Nome" name="{{ register_form.first_name.name }}" data-field-name="first_name" required>
+                        <i class="bx bx-user"></i>  
+                        <div class="error-message" data-error-for="first_name"></div>
+                        <!-- {% if register_form.first_name.errors %}
+                            <div style="color: red;">
+                                {{ register_form.first_name.errors.0 }}
+                            </div>
+                        {% endif %} -->
+                                              
                     </div>
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Sobrenome">
-                        <i class="bx bx-user"></i>
+                        <input type="text" class="input-field" placeholder="Ultimo Nome" name="{{ register_form.last_name.name }}" data-field-name="last_name" required>
+                        <i class="bx bx-user"></i>  
+
+                        <div class="error-message" data-error-for="last_name"></div>
+
+                        <!-- {% if register_form.last_name.errors %}
+                            <div style="color: red;">
+                                {{ register_form.last_name.errors.0 }}
+                            </div>
+                        {% endif %} -->
+                                              
                     </div>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Email">
-                    <i class="bx bx-envelope"></i>
+                    <input type="text" class="input-field" placeholder="Email" name="{{ register_form.username.name }}" data-field-name="username" required>
+                    <i class="bx bx-envelope"></i> 
+                    <div class="error-message" data-error-for="username"></div>
+
+                    <!-- {% if register_form.username.errors %}
+                        <div style="color: red;">
+                            {{ register_form.username.errors.0 }}
+                        </div>
+                    {% endif %} -->
+                                       
                 </div>
                 <div class="input-box">
-                    <input type="password" class="input-field" placeholder="Senha">
+                    <input type="password" class="input-field" placeholder="Senha (6-8 caracteres)" name="{{ register_form.password.name }}" data-field-name="password" required>
                     <i class="bx bx-lock-alt"></i>
+                    <div class="error-message" data-error-for="password"></div>
+
+                    <!-- {% if register_form.password.errors %}
+                        <div style="color: red;">
+                            {{ register_form.password.errors.0 }}
+                        </div>
+                    {% endif %} -->
+                                     
+               </div>
+
+               <div class="input-box">
+                    <input type="password" class="input-field" placeholder="Chave de Registro" name="{{ register_form.reg_key.name }}" data-field-name="reg_key" required>
+                    <i class='bx bx-key'></i> 
+                    <div class="error-message" data-error-for="reg_key"></div>
+
+                    <!-- {% if register_form.reg_key.errors %}
+                        <div style="color: red;">
+                            {{ register_form.reg_key.errors.0 }}
+                        </div>
+                    {% endif %} -->
+                                      
                 </div>
+                <div class="error-message non-field" data-error-for="__all__"></div>
                 <div class="input-box">
-                    <input type="submit" class="submit" value="Cadastrar">
+                    <input type="submit" class="submit" name="register_submit" value="Cadastrar">
                 </div>
                 <div class="two-col">
                     <div class="one">
@@ -106,95 +188,457 @@
                     <div class="two">
                         <label><a href="#">Termos e condições</a></label>
                     </div>
+                <!-- </div> -->
                 </div>
-            </div>
         
             
-            <div class="remember-container" id="remember">
-                <div class="top">
+                <div class="remember-container" id="remember">
+                    <div class="top">
+                        
+                    <header>Recuperação de senha</header>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Usuário ou Email">
+                        <i class="bx bx-user"></i>
+                    </div>
                     
-                <header>Recuperação de senha</header>
-                </div>
-                <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Usuário ou Email">
-                    <i class="bx bx-user"></i>
-                </div>
+                    <div class="input-box">
+                        <input type="submit" class="submit" value="Enviar código">
+                    </div>
                 
-                <div class="input-box">
-                    <input type="submit" class="submit" value="Enviar código">
                 </div>
-            
-            </div>
-        </form>  
-    </div>
-</div>   
+            </form> 
+        </div>
 
-
-<script>
-   
-   function funcaoMenu() {
-    var i = document.getElementById("navMenu");
-
-    if(i.className === "nav-menu") {
-        i.className += " responsive";
-    } else {
-        i.className = "nav-menu";
-    }
-   }
- 
-</script>
-
-<script>
-
-    var a = document.getElementById("loginBtn");
-    var b = document.getElementById("registerBtn");
-    var x = document.getElementById("login");
-    var y = document.getElementById("register");
-
-    function login() {
-    var loginForm = document.getElementById("login");
-    var registerForm = document.getElementById("register");
-    var rememberForm = document.getElementById("remember");
-
-    loginForm.style.left = "4px";
-    registerForm.style.left = "-510px";
-    rememberForm.style.left = "-510px";
-
-    loginForm.style.opacity = "1";
-    registerForm.style.opacity = "0";
-    rememberForm.style.opacity = "0";
-}
-
-function register() {
-    var loginForm = document.getElementById("login");
-    var registerForm = document.getElementById("register");
-    var rememberForm = document.getElementById("remember");
-
-    loginForm.style.left = "-510px";
-    registerForm.style.left = "4px";
-    rememberForm.style.left = "-510px";
-
-    loginForm.style.opacity = "0";
-    registerForm.style.opacity = "1";
-    rememberForm.style.opacity = "0";
-}
-
-function remember() {
-    var loginForm = document.getElementById("login");
-    var registerForm = document.getElementById("register");
-    var rememberForm = document.getElementById("remember");
-
-    loginForm.style.left = "-510px";
-    registerForm.style.left = "-510px";
-    rememberForm.style.left = "4px";
-
-    loginForm.style.opacity = "0";
-    registerForm.style.opacity = "0";
-    rememberForm.style.opacity = "1";
-}
-
+        
+    </div>  
     
-</script>
+    <!-- WHY IS THIS HERE AGAIN??? -->
+    {% if messages %}
+        <ul class="messages" id="django-messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %} 
 
+
+    <script>    
+        function funcaoMenu() {
+            var i = document.getElementById("navMenu");
+
+            if(i.className === "nav-menu") {
+                i.className += " responsive";
+            } else {
+                i.className = "nav-menu";
+            }
+        }    
+    </script>
+    <script>
+        // --- Element Selection (Do this once, globally) ---
+        // Use const for elements that shouldn't be reassigned
+        const loginFormDiv = document.getElementById("login");
+        const registerFormDiv = document.getElementById("register");
+        const rememberFormDiv = document.getElementById("remember"); // Ensure this element exists if used
+        const loginForm = document.getElementById('login-form');     // The <form> element
+        const registerForm = document.getElementById('register-form'); // The <form> element
+        const navMenu = document.getElementById("navMenu");          // For menu function
+        const csrfTokenInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    
+        // Check if essential elements were found
+        if (!loginFormDiv || !registerFormDiv) {
+            console.error("Error: Login or Register container DIV not found!");
+        }
+        if (!loginForm || !registerForm) {
+            console.error("Error: Login or Register FORM element not found!");
+        }
+        if (!csrfTokenInput) {
+            console.error("CRITICAL ERROR: CSRF Token input field not found!");
+        }
+        const csrfToken = csrfTokenInput ? csrfTokenInput.value : null; // Get value safely AFTER checking
+    
+    
+        // --- Form Visibility Toggle Functions ---
+        // Use the globally selected div elements directly
+        function showLoginForm() {
+            console.log("Attempting to show Login Form"); // Debug
+            if (loginFormDiv) { loginFormDiv.style.left = "0.25rem"; loginFormDiv.style.opacity = "1"; }
+            if (registerFormDiv) { registerFormDiv.style.left = "-31.875rem"; registerFormDiv.style.opacity = "0"; }
+            if (rememberFormDiv) { rememberFormDiv.style.left = "-31.875rem"; rememberFormDiv.style.opacity = "0"; }
+        }
+        function showRegisterForm() {
+             console.log("Attempting to show Register Form"); // Debug
+            if (loginFormDiv) { loginFormDiv.style.left = "-31.875rem"; loginFormDiv.style.opacity = "0"; }
+            if (registerFormDiv) { registerFormDiv.style.left = "0.25rem"; registerFormDiv.style.opacity = "1"; }
+            if (rememberFormDiv) { rememberFormDiv.style.left = "-31.875rem"; rememberFormDiv.style.opacity = "0"; }
+        }
+        function showRememberForm() {
+            console.log("Attempting to show Remember Form"); // Debug
+            if (loginFormDiv) { loginFormDiv.style.left = "-31.875rem"; loginFormDiv.style.opacity = "0"; }
+            if (registerFormDiv) { registerFormDiv.style.left = "-31.875rem"; registerFormDiv.style.opacity = "0"; }
+            if (rememberFormDiv) { rememberFormDiv.style.left = "0.25rem"; rememberFormDiv.style.opacity = "1"; }
+        }
+    
+    
+        // --- AJAX Form Submission Handling ---
+    
+        function clearFormErrors(formElement) {
+            if (!formElement) return;
+            console.log("Clearing errors for form:", formElement.id); // Debug
+            const errorMessages = formElement.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => msg.innerHTML = '');
+        }
+    
+        function displayFormErrors(formElement, errors) {
+            if (!formElement || !errors) return;
+            console.log("Displaying errors for form:", formElement.id, errors); // Debug
+            for (const fieldName in errors) {
+                const errorList = errors[fieldName];
+                const errorContainer = formElement.querySelector(`.error-message[data-error-for="${fieldName}"]`);
+                if (errorContainer) {
+                    // Use basic styling directly for simplicity, or add CSS classes
+                    let html = '<ul style="color: red; list-style: none; padding: 0; margin: 5px 0 0 0; font-size: 0.8em;">';
+                    errorList.forEach(error => {
+                        html += `<li>${error.message}</li>`;
+                    });
+                    html += '</ul>';
+                    errorContainer.innerHTML = html;
+                } else {
+                    console.warn(`Could not find error container for field: ${fieldName} in form ${formElement.id}`);
+                }
+            }
+        }
+    
+        async function handleFormSubmit(event) {
+            event.preventDefault(); // *Critical* Stop default page reload
+            const form = event.target;
+            console.log(`Submit intercepted for form: ${form.id}`); // Debug
+    
+            if (!csrfToken) {
+                alert("Cannot submit form: CSRF token is missing.");
+                console.error("CSRF token missing during submit attempt.");
+                return; // Stop submission
+            }
+    
+            const formData = new FormData(form);
+
+            if (form.id === 'login-form') {
+                formData.append('login_submit', 'Entrar'); // Add login submit key/value
+            } else if (form.id === 'register-form') {
+                formData.append('register_submit', 'Cadastrar'); // Add register submit key/value
+            }
+
+
+            clearFormErrors(form);
+    
+            const submitButton = form.querySelector('input[type="submit"]');
+            const originalButtonValue = submitButton.value;
+            submitButton.disabled = true;
+            submitButton.value = 'Processing...';
+    
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest' // Helps Django differentiate if needed
+                    },
+                    body: formData
+                });
+    
+                // Try to parse JSON regardless of response.ok - error responses have JSON bodies too
+                let data;
+                try {
+                     data = await response.json();
+                     console.log('Received data:', data); // Debug: See the parsed data
+                } catch (jsonError) {
+                     console.error("Failed to parse JSON response:", jsonError);
+                     // Attempt to get raw text for debugging
+                     const rawText = await response.text();
+                     console.error("Raw server response:", rawText);
+                     alert('An unexpected server response was received. Please check console.');
+                     // Stop further processing if JSON parsing fails
+                     throw new Error("Invalid JSON response from server.");
+                }
+    
+    
+                if (!response.ok) { // Check HTTP status code (e.g., 400, 500)
+                    console.error(`Response not OK: ${response.status}`);
+                    if (data && data.status === 'error' && data.errors) {
+                        displayFormErrors(form, data.errors);
+                    } else {
+                        // Generic error for non-validation issues (e.g., 500 server error)
+                        alert(`An error occurred (${response.status}). Please try again or check the console.`);
+                    }
+                } else { // Response is OK (2xx status code)
+                    if (data.status === 'success') {
+                        if (data.redirect_url) {
+                            console.log('Success! Redirecting to:', data.redirect_url); // Debug
+                            window.location.href = data.redirect_url; // Perform the redirect
+                        } else {
+                            // Successful registration or other success without redirect
+                            alert(data.message || 'Operation successful!'); // Show success message
+                            if (form.id === 'register-form') {
+                                console.log('Registration successful, resetting form and showing login.'); // Debug
+                                form.reset();      // Clear the registration form
+                                showLoginForm(); // Switch view to the login form
+                            }
+                        }
+                    } else {
+                        // Handle cases where response.ok is true, but data.status is not 'success'
+                        console.error("Unexpected success response format:", data);
+                        alert('Received an unexpected success response from the server.');
+                        // Display errors if available, even on success status code but failed logical status
+                        if (data.errors) {
+                             displayFormErrors(form, data.errors);
+                        }
+                    }
+                }
+    
+            } catch (error) { // Catch network errors or errors thrown above (like JSON parse failure)
+                console.error('Fetch Error or Processing Error:', error);
+                alert('Could not process the request. Please check your connection or console and try again.');
+            } finally {
+                // Ensure button is always re-enabled
+                submitButton.disabled = false;
+                submitButton.value = originalButtonValue;
+            }
+        }
+    
+        // --- Attach Listeners and Set Initial State ---
+        // Use DOMContentLoaded to ensure elements exist before attaching listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM fully loaded and parsed.");
+    
+            // Set initial form visibility
+            showLoginForm();
+    
+            // Attach submit listeners
+            if (loginForm) {
+                console.log("Attaching submit listener to login form.");
+                loginForm.addEventListener('submit', handleFormSubmit);
+            } else {
+                console.error("Login form element (#login-form) not found on DOMContentLoaded!");
+            }
+            if (registerForm) {
+                console.log("Attaching submit listener to register form.");
+                registerForm.addEventListener('submit', handleFormSubmit);
+            } else {
+                console.error("Register form element (#register-form) not found on DOMContentLoaded!");
+            }
+    
+            // Verify CSRF token again (in case it was added dynamically later, though unlikely here)
+            if (!csrfToken) {
+                 console.error("CRITICAL ERROR: CSRF Token not found on DOMContentLoaded!");
+            }
+        });
+    
+    
+        // --- Menu Function ---
+         function myMenuFunction() { // Ensure this name matches onclick in HTML
+            console.log("myMenuFunction called"); // Debug
+             if (navMenu) {
+                if(navMenu.className === "nav-menu") {
+                    navMenu.className += " responsive";
+                } else {
+                    navMenu.className = "nav-menu";
+                }
+             } else {
+                 console.error("navMenu element not found!");
+             }
+        }
+    
+    </script>
+    <!-- <script>
+        // let loginForm = document.getElementById("login");
+        // let registerForm = document.getElementById("register");
+        // let rememberForm = document.getElementById("remember");
+
+        //showing loginform by default
+        showLoginForm();
+
+        // var showRegisterInitially = {{ show_register|yesno:"true,false" }};
+
+        // if (showRegisterInitially) {
+        //     // Show Register form (because it had errors on previous submit)
+        //     loginForm.style.left = "-31.875rem";
+        //     registerForm.style.left = "0.25rem";
+        //     rememberForm.style.left = "-31.875rem"; // Adjust if remember form exists
+
+        //     loginForm.style.opacity = "0";
+        //     registerForm.style.opacity = "1";
+        //     rememberForm.style.opacity = "0"; // Adjust if remember form exists
+        // } else {
+        //     // Default: Show Login form
+        //     loginForm.style.left = "0.25rem";
+        //     registerForm.style.left = "-31.875rem";
+        //     rememberForm.style.left = "-31.875rem"; // Adjust if remember form exists
+
+        //     loginForm.style.opacity = "1";
+        //     registerForm.style.opacity = "0";
+        //     rememberForm.style.opacity = "0"; // Adjust if remember form exists
+        // }
+
+        let a = document.getElementById("loginBtn");
+        let b = document.getElementById("registerBtn");
+        let x = document.getElementById("login");
+        let y = document.getElementById("register");
+
+        function showLoginForm() {
+            let loginForm = document.getElementById("login");
+            let registerForm = document.getElementById("register");
+            let rememberForm = document.getElementById("remember");
+
+            loginForm.style.left = "0.25rem";
+            registerForm.style.left = "-31.875rem";
+            rememberForm.style.left = "-31.875rem";
+
+            loginForm.style.opacity = "1";
+            registerForm.style.opacity = "0";
+            rememberForm.style.opacity = "0";
+        }
+
+        function showRegisterForm() {
+            let loginForm = document.getElementById("login");
+            let registerForm = document.getElementById("register");
+            let rememberForm = document.getElementById("remember");
+
+            loginForm.style.left = "-31.875rem";
+            registerForm.style.left = "0.25rem";
+            rememberForm.style.left = "-31.875rem";
+
+            loginForm.style.opacity = "0";
+            registerForm.style.opacity = "1";
+            rememberForm.style.opacity = "0";
+        }
+
+        function showRememberForm() {
+            let loginForm = document.getElementById("login");
+            let registerForm = document.getElementById("register");
+            let rememberForm = document.getElementById("remember");
+
+            loginForm.style.left = "-31.875rem";
+            registerForm.style.left = "-31.875rem";
+            rememberForm.style.left = "0.25rem";
+
+            loginForm.style.opacity = "0";
+            registerForm.style.opacity = "0";
+            rememberForm.style.opacity = "1";
+        }    
+
+        // --- AJAX Form Submission Handling ---
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+        // Function to clear previous errors from a form
+        function clearFormErrors(formElement) {
+            const errorMessages = formElement.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => msg.innerHTML = ''); // Clear content
+            const inputFields = formElement.querySelectorAll('.input-field');
+            // Optional: remove error styling from inputs if you added any
+            // inputFields.forEach(field => field.classList.remove('is-invalid'));
+        }
+
+        // Function to display errors received from JSON
+        function displayFormErrors(formElement, errors) {
+            for (const fieldName in errors) {
+                const errorList = errors[fieldName]; // List of error objects [{message: '', code: ''}]
+                // Find the placeholder div for this field (using data-error-for attribute)
+                const errorContainer = formElement.querySelector(`.error-message[data-error-for="${fieldName}"]`);
+                if (errorContainer) {
+                    let html = '<ul>';
+                    errorList.forEach(error => {
+                        html += `<li>${error.message}</li>`;
+                    });
+                    html += '</ul>';
+                    errorContainer.innerHTML = html;
+
+                    // Optional: Add error styling to the corresponding input
+                    // const inputField = formElement.querySelector(`[name="${fieldName}"]`);
+                    // if (inputField) inputField.classList.add('is-invalid');
+                }
+            }
+        }
+
+        // Function to handle the form submission
+        async function handleFormSubmit(event) {
+            event.preventDefault(); // Stop default page reload
+
+            const form = event.target;
+            const formData = new FormData(form);
+            // FormData includes the clicked submit button's name and value
+
+            clearFormErrors(form); // Clear old errors before submitting
+
+            // Display loading indicator (optional)
+            const submitButton = form.querySelector('input[type="submit"]');
+            const originalButtonValue = submitButton.value;
+            submitButton.disabled = true;
+            submitButton.value = 'Processing...';
+
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'Accept': 'application/json', // Important: Tell Django we want JSON
+                        'X-Requested-With': 'XMLHttpRequest' // Often checked by Django is_ajax()
+                    },
+                    body: formData
+                });
+
+                const data = await response.json(); // Always expect JSON back
+
+                if (!response.ok) { // Check for 4xx/5xx status codes (like our 400 for validation)
+                    if (data.status === 'error' && data.errors) {
+                        displayFormErrors(form, data.errors);
+                    } else {
+                        // Handle other non-validation errors (e.g., server error 500)
+                        alert('An unexpected error occurred. Please try again.');
+                    }
+                } else { // Response is OK (2xx status code)
+                    if (data.status === 'success') {
+                        if (data.redirect_url) {
+                            // Successful login, redirect
+                            window.location.href = data.redirect_url;
+                        } else {
+                            // Successful registration
+                            alert(data.message || 'Success!'); // Show success message
+                            // Clear the registration form (optional)
+                            form.reset();
+                            // Switch view to the login form
+                            showLoginForm();
+                            // Optional: Remove Django messages if shown via AJAX success
+                            const djangoMessages = document.getElementById('django-messages');
+                            if (djangoMessages) djangoMessages.style.display = 'none';
+                        }
+                    } else {
+                        // Should not happen if backend returns JSON correctly, but handle defensively
+                        console.error("Unexpected success response format:", data);
+                        alert('An unexpected response occurred.');
+                    }
+                }
+
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                alert('Could not connect to the server. Please check your connection and try again.');
+            } finally {
+                // Re-enable submit button and restore text
+                submitButton.disabled = false;
+                submitButton.value = originalButtonValue;
+            }
+        }
+
+        // Attach the handler to both forms
+        if (loginForm) {
+            loginForm.addEventListener('submit', handleFormSubmit);
+        }
+        if (registerForm) {
+            registerForm.addEventListener('submit', handleFormSubmit);
+        }
+    </script> -->
 </body>
 </html>

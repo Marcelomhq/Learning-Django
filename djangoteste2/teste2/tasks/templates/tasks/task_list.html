@@ -4,7 +4,7 @@
     <title>Task List</title>
 </head>
 <body>
-    <h1>Task List</h1>
+    <h1>Task List - User: {{ request.user.username }}</h1>
     <a href="{% url 'tasks:task_create' %}">Add Task</a>
     {% if tasks %}
     <ul>

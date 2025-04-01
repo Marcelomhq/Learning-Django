@@ -13,6 +13,7 @@ body{
     background-attachment: fixed;
     /* overflow: hidden; */
 }
+
 .wrapper{
     display: flex;
     justify-content: center;

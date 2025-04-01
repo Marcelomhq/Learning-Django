@@ -4,13 +4,12 @@ from django.views.generic.base import RedirectView
 from . import views
 app_name = "tasks"
 
-# def redirect_to_login(request):
-#     return redirect("tasks:login")
+
 
 urlpatterns = [
-    path("", RedirectView.as_view(pattern_name="tasks:login", permanent="False")),
-    path("login/", views.TheLoginView.as_view(), name="login"),
-    path("register/", views.RegisterView.as_view(), name="register"),
+    path("",RedirectView.as_view(pattern_name="tasks:authenticate",permanent="False")),
+    path("authenticate/", views.AuthenticationView.as_view(), name="authenticate"),
+    
 
     path("task_list/", views.TaskListView.as_view(), name='task_list'),
     path("create/", views.CreateView.as_view(), name='task_create'),

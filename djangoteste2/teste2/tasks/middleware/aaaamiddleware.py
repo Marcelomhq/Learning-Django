@@ -27,7 +27,7 @@ class RequireLoginMiddleware:
         
         print(f"🚨 Checking request path: {request.path}")  # 🔍 Debug print
         
-        if not request.user.is_authenticated and request.path not in allowed_paths:
+        if not request.user.is_authenticated and request.path not in allowed_paths and not request.path.startswith('/admin/'):
             print("⚠️ User is NOT authenticated. Redirecting to /authenticate/")
             return redirect("tasks:authenticate")  # Redirect to correct login page
 

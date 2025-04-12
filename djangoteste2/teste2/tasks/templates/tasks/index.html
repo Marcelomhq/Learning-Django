@@ -9,180 +9,102 @@
     <title>Web Planner | Login & Cadastro</title>
 </head>
 <body>
- <div class="wrapper">
-    <nav class="nav">
-        <div class="nav-logo">
-            <p>Planner .</p>
-        </div>
-        <div class="nav-menu" id="navMenu">
-            <ul>
-                <li><a href="#" class="link active">Página Inicial</a></li>
-                <li><a href="#" class="link">Calendário</a></li>
-                <li><a href="#" class="link">Tarefas</a></li>
-                <li><a href="#" class="link">Registros</a></li>
-            </ul>
-        </div>
-        <div class="nav-button">
-            <button class="btn white-btn" id="loginBtn" onclick="login()">Entrar</button>
-            <button class="btn" id="registerBtn" onclick="register()">Registrar</button>
-        </div>
-        <div class="nav-menu-btn">
-            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
-        </div>
-    </nav>
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                <p>Planner .</p>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="#" class="link active">Calendário</a></li>
+                    <li><a href="#" class="link">Tarefas</a></li>
+                    <li><a href="#" class="link">Relatórios</a></li>
+                </ul>
+            </div>
+            <div class="nav-button">
+                <button class="btn white-btn" id="loginBtn" onclick="login()">Entrar</button>
+                <button class="btn" id="registerBtn" onclick="register()">Registrar</button>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
 
-    <div class="form-box">
-        
-        <div class="login-container" id="login">
-            <div class="top">
-                <span>Não tem uma conta? <a href="#" onclick="register()">Cadastrar-se</a></span>
-                <header>Login</header>
-            </div>
-            <div class="input-box">
-                <input type="text" class="input-field" placeholder="Usuário ou Email">
-                <i class="bx bx-user"></i>
-            </div>
-            <div class="input-box">
-                <input type="password" class="input-field" placeholder="Senha">
-                <i class="bx bx-lock-alt"></i>
-            </div>
-            <div class="input-box">
-                <input type="submit" class="submit" value="Entrar">
-            </div>
-            <div class="two-col">
-                <div class="one">
-                    <input type="checkbox" id="login-check">
-                    <label for="login-check">Lembrar-me</label>
+        <div class="form-box">
+            
+            <div class="login-container" id="login">
+                <div class="top">
+                    <span>Não tem uma conta? <a href="#" onclick="register()">Cadastrar-se</a></span>
+                    <header>Login</header>
                 </div>
-                <div class="two">
-                    <label><a href="#" onclick="remember()">Esqueceu a senha? </a></label>
-                </div>
-            </div>
-        </div>
-
-        
-        <div class="register-container" id="register">
-            <div class="top">
-                <span>Já tem uma conta? <a href="#" onclick="login()">Login</a></span>
-                <header>Cadastrar-se</header>
-            </div>
-            <div class="two-forms">
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Nome">
+                    <input type="text" class="input-field" placeholder="Usuário ou Email">
                     <i class="bx bx-user"></i>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Sobrenome">
-                    <i class="bx bx-user"></i>
+                    <input type="password" class="input-field" placeholder="Senha">
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Entrar">
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="login-check">
+                        <label for="login-check">Lembrar-me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="forgot_password.html">Esqueceu a senha?</a></label>
+                    </div>
                 </div>
             </div>
-            <div class="input-box">
-                <input type="text" class="input-field" placeholder="Email">
-                <i class="bx bx-envelope"></i>
-            </div>
-            <div class="input-box">
-                <input type="password" class="input-field" placeholder="Senha">
-                <i class="bx bx-lock-alt"></i>
-            </div>
-            <div class="input-box">
-                <input type="submit" class="submit" value="Cadastrar">
-            </div>
-            <div class="two-col">
-                <div class="one">
-                    <input type="checkbox" id="register-check">
-                    <label for="register-check"> Lembrar-me</label>
+
+            
+            <div class="register-container" id="register">
+                <div class="top">
+                    <span>Já tem uma conta? <a href="#" onclick="login()">Login</a></span>
+                    <header>Cadastrar-se</header>
                 </div>
-                <div class="two">
-                    <label><a href="#">Termos e condições</a></label>
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Nome">
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Sobrenome">
+                        <i class="bx bx-user"></i>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Email">
+                    <i class="bx bx-envelope"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" class="input-field" placeholder="Senha">
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Cadastrar">
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="register-check">
+                        <label for="register-check"> Lembrar-me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="#">Termos e condições</a></label>
+                    </div>
                 </div>
             </div>
-        </div>
-    
         
-        <div class="remember-container" id="remember">
-            <div class="top">
-                
-            <header>Recuperação de senha</header>
-            </div>
-            <div class="input-box">
-                <input type="text" class="input-field" placeholder="Usuário ou Email">
-                <i class="bx bx-user"></i>
-            </div>
-            
-            <div class="input-box">
-                <input type="submit" class="submit" value="Enviar código">
-            </div>
             
         </div>
-    </div>
-</div>   
+    </div>   
 
 
-<script>
    
-   function funcaoMenu() {
-    var i = document.getElementById("navMenu");
-
-    if(i.className === "nav-menu") {
-        i.className += " responsive";
-    } else {
-        i.className = "nav-menu";
-    }
-   }
- 
-</script>
-
-<script>
-
-    var a = document.getElementById("loginBtn");
-    var b = document.getElementById("registerBtn");
-    var x = document.getElementById("login");
-    var y = document.getElementById("register");
-
-    function login() {
-    var loginForm = document.getElementById("login");
-    var registerForm = document.getElementById("register");
-    var rememberForm = document.getElementById("remember");
-
-    loginForm.style.left = "4px";
-    registerForm.style.left = "-510px";
-    rememberForm.style.left = "-510px";
-
-    loginForm.style.opacity = "1";
-    registerForm.style.opacity = "0";
-    rememberForm.style.opacity = "0";
-}
-
-function register() {
-    var loginForm = document.getElementById("login");
-    var registerForm = document.getElementById("register");
-    var rememberForm = document.getElementById("remember");
-
-    loginForm.style.left = "-510px";
-    registerForm.style.left = "4px";
-    rememberForm.style.left = "-510px";
-
-    loginForm.style.opacity = "0";
-    registerForm.style.opacity = "1";
-    rememberForm.style.opacity = "0";
-}
-
-function remember() {
-    var loginForm = document.getElementById("login");
-    var registerForm = document.getElementById("register");
-    var rememberForm = document.getElementById("remember");
-
-    loginForm.style.left = "-510px";
-    registerForm.style.left = "-510px";
-    rememberForm.style.left = "4px";
-
-    loginForm.style.opacity = "0";
-    registerForm.style.opacity = "0";
-    rememberForm.style.opacity = "1";
-}
-
-    
-</script>
+    <script src="JS/script.js"></script>
 
 </body>
+
 </html>

@@ -1,22 +1,5 @@
 from django.shortcuts import redirect,HttpResponse
 from django.urls import reverse
-
-# class RequireLoginMiddleware:
-#     """
-#     Middleware that redirects users to the login page if they are not authenticated,
-#     except for certain allowed paths.
-#     """
-#     def __init__(self, get_response):
-#         self.get_response = get_response
-
-#     def __call__(self, request):
-#         # allowed_paths = [reverse("tasks:login"), reverse("tasks:register")] 
-#         allowed_paths = [reverse("tasks:authenticate"),reverse("tasks:authenticate")] # URLs that don't require login
-
-#         if not request.user.is_authenticated and request.path not in allowed_paths:
-#             return redirect("tasks:authenticate")  # Redirect to login if user is not authenticated
-
-#         return self.get_response(request)
     
 class RequireLoginMiddleware:
     def __init__(self, get_response):
@@ -27,7 +10,7 @@ class RequireLoginMiddleware:
         
         print(f"🚨 Checking request path: {request.path}")  # 🔍 Debug print
         
-        if not request.user.is_authenticated and request.path not in allowed_paths and not request.path.startswith('/admin/'):
+        if not request.user.is_authenticated and request.path not in allowed_paths and not request.path.startswith('/admin/') and not request.path.startswith('/accounts/'):
             print("⚠️ User is NOT authenticated. Redirecting to /authenticate/")
             return redirect("tasks:authenticate")  # Redirect to correct login page
 

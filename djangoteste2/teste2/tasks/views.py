@@ -139,7 +139,9 @@ class RegisterView(FormView):
             for error in errors:
                 messages.error(self.request, f"{field}: {error}")
         return super().form_invalid(form)
-        
+
+
+
 class AuthenticationView(View):
 
     template_name = 'tasks/login_screen.html' # Single template

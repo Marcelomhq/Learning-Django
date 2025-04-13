@@ -99,8 +99,25 @@ class TheLoginForm(forms.Form):
         else:
             cleaned_data["user"] = user
         return cleaned_data
-    
-        
+
+class ResetPasswordForm(forms.Form):
+    first_name = forms.CharField(
+        label="First Name",
+        widget=forms.TextInput(attrs={"placeholder": "Enter your first name"})
+    )
+
+    last_name = forms.CharField(
+        label="Last Name",
+        widget=forms.TextInput(attrs={"placeholder": "Enter your first name"})
+    )
+
+    username = forms.EmailField(
+        label="Username (Email)", 
+        validators=[EmailValidator()], 
+        widget=forms.EmailInput(attrs={"placeholder": "Enter your email"})
+    )
+
+#old login form        
         # if not User.objects.filter(username=username).exists():
         #     self.add_error("username","Username can't be found.")
         # else:

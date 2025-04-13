@@ -9,7 +9,7 @@ app_name = "tasks"
 urlpatterns = [
     path("",RedirectView.as_view(pattern_name="tasks:authenticate",permanent="False")),
     path("authenticate/", views.AuthenticationView.as_view(), name="authenticate"),
-    
+    # path("resetpass/", views.ResetPasswordView.as_view(), name="resetpass"),
 
     path("task_list/", views.TaskListView.as_view(), name='task_list'),
     path("create/", views.CreateView.as_view(), name='task_create'),

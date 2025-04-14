@@ -163,11 +163,11 @@ header{
     padding: 10px 0 30px 0;
 }
 
-#header1{
-    color: #fff;
-    font-size: 30px;
-    text-align: center;
-    padding: 10px 10px 10px;
+.reset-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .reset-box{
@@ -183,7 +183,6 @@ header{
     
 }
 
-
 .reset-box p{
     color: #fff;
     font-size: 15px;
@@ -191,11 +190,18 @@ header{
     padding: 2px 0 0px;
 }
 
-#paragrafo2{
+.reset-box #paragrafo2{
     color: #fff;
     font-size: 15px;
     text-align: center;
     padding: 2px 5px 20px;
+}
+
+.reset-box #header1{
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    padding: 10px 10px 10px;
 }
 
 

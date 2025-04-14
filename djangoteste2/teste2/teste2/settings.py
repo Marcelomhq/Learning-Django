@@ -35,7 +35,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -45,7 +44,8 @@ INSTALLED_APPS = [
     "tasks",
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [     
+    "tasks.middleware.aaaamiddleware.RedirectOldLoginMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -53,7 +53,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "tasks.middleware.aaaamiddleware.RequireLoginMiddleware" 
 ]
+
+LOGIN_URL = "/authenticate/"  
+
 
 ROOT_URLCONF = "teste2.urls"
 
@@ -69,6 +73,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+        
         },
     },
 ]
@@ -97,7 +102,38 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# # settings.py
+
+# # --- Gmail Email Settings (FOR LOCAL DEVELOPMENT ONLY - DO NOT USE IN PRODUCTION!) ---
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587  # Use 587 for TLS
+# EMAIL_USE_TLS = True  # Use TLS (required by Gmail)
+# EMAIL_HOST_USER = 'planne.auth@gmail.com'  # Your full Gmail address
+# EMAIL_HOST_PASSWORD = 'Uniesp123' # <<< IMPORTANT: Use an APP PASSWORD, NOT your regular Gmail password!
+
+# # Optional: Set a default 'From' address
+# DEFAULT_FROM_EMAIL = 'My Django App <your_gmail_address@gmail.com>'
+
+# settings.py
+
+# --- Production Email Settings ---
+# Uses environment variables for security. Set these variables on PythonAnywhere.
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = os.getenv('EMAIL_HOST')  # e.g., 'smtp.sendgrid.net' or 'smtp.gmail.com'
+# EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587)) # Use 587 for TLS, 465 for SSL, default to 587
+# EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true' # Default to True if var missing
+# EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False').lower() == 'true' # Default to False
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') # Your SMTP username or API key name
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # Your SMTP password or API key (KEEP SECRET)
+
+# # Optional: Set a default 'From' address
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'webmaster@localhost')
+# # You might want a better default, e.g., using your domain name if available
+# # SERVER_EMAIL = DEFAULT_FROM_EMAIL # Often used for error emails from Django itself
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -117,6 +153,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "tasks.User"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -133,7 +171,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'tasks', 'static', 'tasks'),
+    os.path.join(BASE_DIR, 'tasks', 'static', 'tasks', 'imagens'),
+]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATIC_URL = "static/"
+# STATICFILES_DIR = [
+#     os.path.join(BASE_DIR,'tasks','static'),
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -24,22 +24,22 @@ urlpatterns = [
     #this will include accounts/password_reset + password_reset/done/ + reset/<uidb64>/<token>/ + reset/done/
     path(
         'accounts/password_reset/',
-        auth_views.PasswordResetView.as_view(template_name='registration/new_password_reset_form.html'),
+        auth_views.PasswordResetView.as_view(template_name='registration/forgot_password_email_check.html'),
         name='password_reset',
     ),
     path(
         'accounts/password_reset/done/',
-        auth_views.PasswordResetDoneView.as_view(),
+        auth_views.PasswordResetDoneView.as_view(template_name = 'registration/password_reset_email_sent.html'),
         name='password_reset_done',
     ),
     path(
         'accounts/reset/<uidb64>/<token>/',
-        auth_views.PasswordResetConfirmView.as_view(),
+        auth_views.PasswordResetConfirmView.as_view(template_name = 'registration/new_password.html'),
         name='password_reset_confirm',
     ),
     path(
         'accounts/reset/done/',
-        auth_views.PasswordResetCompleteView.as_view(),
+        auth_views.PasswordResetCompleteView.as_view(template_name = 'registration/password_reset_process_complete.html'),
         name='password_reset_complete',
     ),
     # path("accounts/", include("django.contrib.auth.urls")),

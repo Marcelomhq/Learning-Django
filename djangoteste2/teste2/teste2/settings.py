@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from tasks.validators import MaximumLengthValidator
+
 
 load_dotenv()
 
@@ -144,6 +146,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length" : 6,
+        }
+    },
+    # {
+    #     'NAME': 'tasks.validators.MaximumLengthValidator', # Update with the correct path to your validator
+    #     'OPTIONS': {
+    #         'max_length': 8,
+    #     }
+    # },
+    {
+        "NAME": "tasks.validators.MaximumLengthValidator",
+        "OPTIONS": {
+            "max_length": 8,
+        }
     },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",

@@ -32,11 +32,20 @@ body{
     background: linear-gradient(rgba(39,39,39, 0.6), transparent);
     z-index: 100;
 }
-.nav-logo p{
+.nav-logo a{
     color: white;
     font-size: 1.56rem;
     font-weight: 600;
+    text-decoration: none;    
 }
+
+.forgot-password-text{
+    font-size: 1.56rem;
+    font-weight: 600;
+    color: #fff;
+    /* font-size: 1.875rem; */
+}
+
 .nav-menu ul{
     display: flex;
 }

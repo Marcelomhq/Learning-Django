@@ -14,7 +14,10 @@
 <div class="wrapper">
     <nav class="nav">
         <div class="nav-logo">
-            <p>Planner .</p>
+            <a style="color: white;
+            font-size: 1.56rem;
+            font-weight: 600;
+            text-decoration: none;" href="{% url 'tasks:authenticate' %}">Planner .</a>
         </div>
         <div class="nav-menu" id="navMenu">
             <ul>
@@ -410,9 +413,20 @@
         // Use DOMContentLoaded to ensure elements exist before attaching listeners
         document.addEventListener('DOMContentLoaded', () => {
             console.log("DOM fully loaded and parsed.");
+
+            // Check for showRegister parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const showRegister = urlParams.get('showRegister');
+
+            // Set initial form visibility
+            if (showRegister === 'true') {
+                showRegisterForm();
+            } else {
+                showLoginForm();
+            }
     
             // Set initial form visibility
-            showLoginForm();
+            // showLoginForm();
     
             // Attach submit listeners
             if (loginForm) {

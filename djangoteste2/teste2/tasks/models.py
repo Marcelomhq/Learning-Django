@@ -48,7 +48,7 @@ class Task(models.Model):
     description = models.TextField(blank=True, null=True)
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add = True)
-    date = models.DateField(db_index=True)
+    date = models.DateField(db_index=True, null=True)
 
     class Meta:
         indexes = [

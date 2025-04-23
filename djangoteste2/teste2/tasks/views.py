@@ -27,6 +27,7 @@ class BaseLoginRequiredView(LoginRequiredMixin):
 
 #New Task list, testing, maybe definitive 22/04/25
 def get_monthly_tasks(user,year,month):
+    from datetime import date
     start = date(year, month, 1)
     end = date(year,month,monthrange(year,month)[1])
 
@@ -46,7 +47,7 @@ class TaskCalendarView(BaseLoginRequiredView,TemplateView):
 
     def get_context_data(self, **kwargs):
         from datetime import datetime
-        context = super().get_context_date(**kwargs)
+        context = super().get_context_data(**kwargs)
         year = int(self.request.GET.get("year",datetime.now().year))
         month = int(self.request.GET.get("month",datetime.now().month))
 

@@ -1,0 +1,59 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ month }}/{{ year }} Calendar</title>
+    <link rel="stylesheet" href="{% static 'tasks/calendar.css' %}">
+</head>
+<body>
+    <h1>{{ month }}/{{ year }} - Task Calendar</h1>
+
+    <!-- Navigation -->
+    <div>
+        <a href="?month={{ month|add:"-1" }}&year={{ year }}">Previous</a> |
+        <a href="?month={{ month|add:"1" }}&year={{ year }}">Next</a>
+    </div>
+
+    <!-- Calendar -->
+    <table class="calendar">
+        <thead>
+            <tr>
+                <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th>
+                <th>Thu</th><th>Fri</th><th>Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in weeks %}
+            <tr>
+                {% for day in week %}
+                <td>
+                    {% if day %}
+                        <div class="date-number">{{ day }}</div>
+
+                        {% with tasks=tasks_by_day|dictkey:day %}
+                            {% if tasks %}
+                                <ul class="task-preview">
+                                    {% for task in tasks|slice:":2" %}
+                                        <li>{{ task.title|truncatechars:20 }}</li>
+                                    {% endfor %}
+                                    {% if tasks|length > 2 %}
+                                        <li>...and more</li>
+                                    {% endif %}
+                                </ul>
+                            {% else %}
+                                <p class="no-tasks">No tasks</p>
+                            {% endif %}
+                        {% endwith %}
+
+                        <a class="view-link" href="{% url 'tasks:day_view' year=year month=month day=day %}">View</a>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

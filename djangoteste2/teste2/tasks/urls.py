@@ -16,4 +16,6 @@ urlpatterns = [
     path("update/<int:pk>/", views.TaskUpdateView.as_view(), name="task_update"),
     path("delete/<int:pk>/", views.TaskDeleteView.as_view(), name="task_delete"),
     path("logout/", views.CustomLogoutView.as_view(), name="logout"),  
+    path("calendar/", views.TaskCalendarView.as_view(), name="calendar"),
+    path("calendar/<int:year>/<int:month>/<int:day>/",views.TaskListView.as_view(), name="day_view")
 ]

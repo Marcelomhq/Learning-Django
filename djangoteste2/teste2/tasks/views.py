@@ -12,6 +12,10 @@ from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from django.http import JsonResponse
+from datetime import date
+from calendar import monthrange,monthcalendar
+from collections import defaultdict
+from django.views.generic import TemplateView
 
 
 
@@ -21,6 +25,50 @@ class BaseLoginRequiredView(LoginRequiredMixin):
     login_url = reverse_lazy("tasks:authenticate")
     redirect_field_name = None
 
+#New Task list, testing, maybe definitive 22/04/25
+def get_monthly_tasks(user,year,month):
+    start = date(year, month, 1)
+    end = date(year,month,monthrange(year,month)[1])
+
+    tasks = Task.objects.filter(
+        user_tag = user,
+        date__range=(start,end)
+    )
+
+    calendar_data = defaultdict(list)
+    for task in tasks:
+        calendar_data[task.date.day].append(task)
+    
+    return calendar_data
+
+class TaskCalendarView(BaseLoginRequiredView,TemplateView):
+    template_name = "calendar/teste.html"
+
+    def get_context_data(self, **kwargs):
+        from datetime import datetime
+        context = super().get_context_date(**kwargs)
+        year = int(self.request.GET.get("year",datetime.now().year))
+        month = int(self.request.GET.get("month",datetime.now().month))
+
+        if month > 12:
+            month = 1
+            year += 1
+        elif month < 1:
+            month = 12
+            year -= 1
+
+        weeks = monthcalendar(year,month)
+        tasks_by_day = get_monthly_tasks(self.request.user,year,month)
+
+        context.update({
+            "weeks": weeks,
+            "tasks_by_day": tasks_by_day,
+            "month": month,
+            "year": year,
+        })
+        return context
+
+#Old Task list views.
 class TaskListView(BaseLoginRequiredView,generic.ListView):
     model = Task
     template_name = 'tasks/task_list.html'

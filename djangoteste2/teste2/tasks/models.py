@@ -46,8 +46,14 @@ class Task(models.Model):
     user_tag = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
-    completed = models.BooleanField(default=True)
+    completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add = True)
+    date = models.DateField(db_index=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["user_tag","date"])
+        ]
 
     def __str__(self):
         return self.title

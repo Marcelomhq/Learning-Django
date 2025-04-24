@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{  
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    background: url("/static/tasks/imagens/background_login2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* overflow: hidden; */
+}
+
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 6.25rem;
+    background: rgba(39, 39, 39, 0.4);
+}
+
+.nav{
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 6.25rem;
+    line-height: 6.25rem;
+    background: linear-gradient(rgba(39,39,39, 0.6), transparent);
+    z-index: 100;
+}
+
+#fullCalendar {
+    /* margin-top: 6.25rem; Offset it by the height of .nav */
+    height: calc(100vh - 6.25rem); /* Fill the rest of the screen */
+    overflow-y: auto;
+    padding: 1rem; /* Optional: add breathing room */
+    backdrop-filter: blur(4px); /* Optional: nice soft blur */
+}
+
+.nav-logo a{
+    color: white;
+    font-size: 1.56rem;
+    font-weight: 600;
+    text-decoration: none;    
+}
+
+.nav-menu ul{
+    display: flex;
+}
+.nav-menu ul li{
+    list-style-type: none;
+}
+.nav-menu ul li .link{
+    text-decoration: none;
+    font-weight: 500;
+    color: #fff;
+    padding-bottom: 0.9375rem;
+    margin: 0 1.5625rem;
+}
+.link:hover, .active{
+    border-bottom: 0.125rem solid #fff;
+}
+.nav-button .btn{
+    width: 8.125rem;
+    height: 2.5rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 1.875rem;
+    cursor: pointer;
+    transition: .3s ease;
+}
+.btn:hover{
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+table.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.calendar th, .calendar td {
+    border: 0.0625rem solid #ccc; /* 1px */
+    padding: 0.5rem;              /* 8px */
+    vertical-align: top;
+    width: 14.28%;
+    height: 7.5rem;               /* 120px */
+}
+
+.date-number {
+    font-weight: bold;
+    margin-bottom: 0.3125rem;     /* 5px */
+}
+
+.task-preview {
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.85em;
+    margin: 0;
+}
+
+.task-preview li {
+    margin-bottom: 0.125rem;      /* 2px */
+}
+
+.view-link {
+    display: inline-block;
+    margin-top: 0.3125rem;        /* 5px */
+    font-size: 0.8em;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.no-tasks {
+    color: #aaa;
+    font-size: 0.8em;
+}

@@ -86,7 +86,7 @@ class TaskListView(BaseLoginRequiredView,generic.ListView):
 class CreateView(BaseLoginRequiredView,generic.CreateView):
     model = Task
     template_name = 'tasks/task_form.html'
-    fields = ['title', 'description']
+    fields = ['title', 'description','date']
 
     def form_valid(self,form):
         form.instance.user_tag = self.request.user

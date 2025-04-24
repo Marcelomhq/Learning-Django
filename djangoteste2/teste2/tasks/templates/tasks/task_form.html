@@ -13,6 +13,8 @@
         <label>Description:</label>
         <textarea name="description">{{ task.description|default:'' }}</textarea>
         <br>
+        <textarea type="date" name="date" value="{{ task.date | default:''}}" required> date </textarea>
+        
         <label>Completed:</label>
         <input type="checkbox" name="completed" {% if task.completed %}checked{% endif %}>
         <br>
